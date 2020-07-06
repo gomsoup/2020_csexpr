@@ -2,25 +2,23 @@
 #include "SerialManager.h"
 
 Wifi wifi = Wifi();
-SerialManager bt = SerialManager(2, 3);
 
 void setup() {
+  Serial.begin(9600);
   // put your setup code here, to run once:
   wifi.WiFiInit();
-  wifi.WiFiConnectAP();
-  wifi.WiFiConnectHost();
-
+  if(!wifi.WiFiConnectAP()) return;
+  if(!wifi.WiFiConnectHost()) return;
+  wifi.getAPConfiguration();
   Serial.println("WIFI SETUP DONE");
-  wifi.send("\n\r");
-
-  
 }
 
 void loop() {
-  if(Serial.available()){
-    char msg = Serial.read();
-    if(msg != 'O')
-      wifi.send("URGT");
-  }
+  wifi.send("PASS");
+  delay(100);
+  wifi.send("URGT");
+  delay(100);
+  wifi.send("OVRP");
+  delay(100);
   // put your main code here, to run repeatedly:
 }
