@@ -10,6 +10,7 @@ public:
 	SerialManager(int _RX, int _TX) {
 		RX = _RX; TX = _TX;
 		serial = new SoftwareSerial(RX, TX);
+    serial->begin(9600);
 	}
 
 	boolean available() {
@@ -20,7 +21,7 @@ public:
 		unsigned long stime = millis();
 		String buf = "";
 
-		while ( (millis() - stime) < 1000) {
+		while ( (millis() - stime) < 500) {
 			if (serial->available()) {
 				char c = (char)serial->read();
 				buf += c;

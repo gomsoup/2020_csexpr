@@ -4,8 +4,8 @@
 
 #define debug false
 
-#define SSID "iPhone"
-#define PWD "123456789a"
+#define SSID "AndroidHotspot"
+#define PWD "qwer1234"
 #define PORT 4000
 
 #define WIFI_RX 7

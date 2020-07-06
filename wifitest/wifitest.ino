@@ -7,18 +7,14 @@ void setup() {
   Serial.begin(9600);
   // put your setup code here, to run once:
   wifi.WiFiInit();
-  if(!wifi.WiFiConnectAP()) return;
-  if(!wifi.WiFiConnectHost()) return;
+  delay(500);
+  wifi.WiFiConnectAP();
+  wifi.WiFiConnectHost();
   wifi.getAPConfiguration();
   Serial.println("WIFI SETUP DONE");
 }
 
 void loop() {
   wifi.send("PASS");
-  delay(100);
-  wifi.send("URGT");
-  delay(100);
-  wifi.send("OVRP");
-  delay(100);
-  // put your main code here, to run repeatedly:
+  delay(5000);
 }

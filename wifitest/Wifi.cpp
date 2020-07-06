@@ -14,24 +14,42 @@ void Wifi::WiFiInit()
 	esp8266.begin(9600);
 	wifi.begin();
 	wifi.setTimeout(5000);
-#ifdef debug
-	wifi.setMode(ESP8266_WIFI_STATION);
-	wifi.quitAP();
-#endif
+  
+  Serial.print("test: ");
+  Serial.println(getStatus(wifi.test()));
+  
+  Serial.print("restart: ");
+  Serial.println(getStatus(wifi.restart()));
 
-  wifi.restart();
-}
+
+  char version[16] = {};
+  Serial.print("getVersion: ");
+  Serial.print(getStatus(wifi.getVersion(version, 16)));
+  Serial.print(" : ");
+  Serial.println(version);
+ 
+  }
 
 
 boolean Wifi::WiFiConnectAP() {
 	Serial.println("WiFiConnectAP...");
-	String res = getStatus(wifi.joinAP(SSID, PWD));
-	if (res == "OK") return true;
 
-	Serial.println("AP Connection failed. Result code : " + res);
-	Serial.println("Check SSID, PWD in Wifi.h");
+  wifi.joinAP(SSID, PWD);
+  wifi.getAP(SSID);
+  //wifi.setMode(ESP8266_WIFI_STATION);
+  //wifi.quitAP();
+	//String res = getStatus(wifi.getAP(SSID));
+	//if (res == "OK") {
+  // getAP
+  //  Serial.print("getAP: ");
+  //  Serial.println(getStatus(wifi.getAP(SSID)));
+	  return true;
+	//}
 
-	return false;
+	//Serial.println("AP Connection failed. Result code : " + res);
+	//Serial.println("Check SSID, PWD in Wifi.h");
+
+	//return false;
 }
 
 boolean Wifi::WiFiConnectHost() {
@@ -39,8 +57,6 @@ boolean Wifi::WiFiConnectHost() {
 	String res = getStatus(wifi.connect(ESP8266_PROTOCOL_TCP, host, PORT));
 	if (res == "OK") {
 	  return true;
-    send("HIDA");
-    send("HIDA");
 	}
   
 	Serial.println("HOST Connection lost. Result code : " + res);
